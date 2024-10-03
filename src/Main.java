@@ -15,6 +15,11 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+
+        // Measure initial memory usage
+        long beforeMemory = runtime.totalMemory() - runtime.freeMemory();
+
         LocalDateTime start = LocalDateTime.now();
 
         // Read and clean the text
@@ -35,8 +40,16 @@ public class Main {
 
         LocalDateTime finish = LocalDateTime.now();
 
+        // Measure memory usage after execution
+        long afterMemory = runtime.totalMemory() - runtime.freeMemory();
+
         // Output time taken for the process
         System.out.println("------");
         System.out.println(ChronoUnit.MILLIS.between(start, finish) + " ms");
+
+        // Output memory usage before and after
+        System.out.println("Memory used before: " + beforeMemory / (1024 * 1024) + " MB");
+        System.out.println("Memory used after: " + afterMemory / (1024 * 1024) + " MB");
+        System.out.println("Memory increase: " + (afterMemory - beforeMemory) / (1024 * 1024) + " MB");
     }
 }
